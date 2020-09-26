@@ -1,18 +1,19 @@
 import Voluntario from '../models/Voluntario';
 
 class VoluntarioRepository {
-  constructor() {
-    this.voluntario = Voluntario;
+  async findByEmail(email) {
+    const findVoluntario = await Voluntario.findOne({ where: { email } });
+    return findVoluntario || null;
   }
 
-  async findByEmail(email) {
-    const findVoluntario = await this.voluntario.findOne({ where: { email } });
+  async findById(id) {
+    const findVoluntario = await Voluntario.findByPk(id);
     return findVoluntario || null;
   }
 
   async create(data) {
     const { nome, cpf_cnpj, email, telefone, data_nasc } = data;
-    const createVoluntario = await this.voluntario.create({
+    const createVoluntario = await Voluntario.create({
       nome,
       cpf_cnpj,
       email,
@@ -21,6 +22,26 @@ class VoluntarioRepository {
     });
     await createVoluntario.save();
     return createVoluntario;
+  }
+
+  async getAll() {
+    const findVoluntarios = await Voluntario.findAll();
+
+    return findVoluntarios;
+  }
+
+  async delete(id) {
+    const deleteVoluntario = await Voluntario.destroy({
+      where: {
+        id,
+      },
+    });
+
+    if (deleteVoluntario) {
+      return { message: 'Usuario Deletado com sucesso' };
+    } else {
+      return { message: 'Usuario não encontrado' };
+    }
   }
 }
 

@@ -4,7 +4,7 @@ class Voluntario extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelize.STRING,
+        nome: Sequelize.STRING,
         cpf_cnpj: Sequelize.STRING,
         email: Sequelize.STRING,
         telefone: Sequelize.STRING,
