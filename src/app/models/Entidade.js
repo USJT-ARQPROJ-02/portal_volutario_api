@@ -9,7 +9,7 @@ class Entidade extends Model {
         email: Sequelize.STRING,
         telefone: Sequelize.STRING,
         data_nasc: Sequelize.DATE,
-        ativa: Sequelize.BOOLEAN
+        ativa: Sequelize.BOOLEAN,
       },
       { sequelize }
     );
@@ -17,4 +17,4 @@ class Entidade extends Model {
   }
 }
 
-export default Voluntario;
+export default Entidade;

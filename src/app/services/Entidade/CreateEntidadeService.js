@@ -9,9 +9,9 @@ class CreateEntidadeService {
       throw new AppError('Email address already used', 401);
     }
 
-    const voluntario = await EntidadeRepository.create(data);
+    const entidade = await EntidadeRepository.create(data);
 
-    return voluntario;
+    return entidade;
   }
 }
 
