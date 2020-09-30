@@ -38,9 +38,9 @@ class EntidadeRepository {
     });
 
     if (deleteEntidade) {
-      return { message: 'Usuario Deletado com sucesso' };
+      return { message: 'Entidade Deletado com sucesso' };
     } else {
-      return { message: 'Usuario não encontrado' };
+      return { message: 'Entidade não encontrado' };
     }
   }
 }
