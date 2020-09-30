@@ -8,7 +8,7 @@ class Voluntario extends Model {
         cpf_cnpj: Sequelize.STRING,
         email: Sequelize.STRING,
         telefone: Sequelize.STRING,
-        data_nasc: Sequelize.DATE,
+        endereco: Sequelize.STRING,
       },
       { sequelize }
     );
