@@ -23,10 +23,10 @@ class CreateVoluntarioService {
       });
 
     const checkEmail = await Voluntario.findOne({
-      where: { email: data.email },
+      where: { email: email },
     });
     const checkEmail2 = await Entidade.findOne({
-      where: { email: data.email },
+      where: { email: email },
     });
 
     if (checkEmail || checkEmail2) {
@@ -34,7 +34,7 @@ class CreateVoluntarioService {
     }
 
     const checkCpf = await Voluntario.findOne({
-      where: { cpf_cnpj: data.cpf_cnpj },
+      where: { cpf_cnpj: cpf_cnpj },
     });
 
     if (checkCpf) {
