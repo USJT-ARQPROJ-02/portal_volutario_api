@@ -1,9 +1,10 @@
 import Sequelize from 'sequelize';
 import Voluntario from '../app/models/Voluntario';
 import Entidade from '../app/models/Entidade';
+import Necessidade from '../app/models/Necessidade';
 import databaseConfig from '../config/database';
 
-const models = [Voluntario, Entidade];
+const models = [Voluntario, Entidade, Necessidade];
 
 class Database {
   constructor() {

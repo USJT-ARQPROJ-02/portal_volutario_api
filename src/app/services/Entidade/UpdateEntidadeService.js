@@ -1,4 +1,3 @@
-import AppError from '../../../errors/AppError';
 import EntidadeRepository from '../../repositories/EntidadeRepository';
 
 class UpdateEntidadeService {

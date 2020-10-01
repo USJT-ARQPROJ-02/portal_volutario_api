@@ -1,4 +1,3 @@
-import AppError from '../../../errors/AppError';
 import VoluntarioRepository from '../../repositories/VoluntarioRepository';
 
 class UpdateVoluntarioService {
