@@ -46,13 +46,12 @@ class SessionController {
     const { id, nome } = entidade;
 
     return res.json({
-      entidade: true,
       user: {
         id,
         nome,
         email,
       },
-      token: jwt.sign({ id }, 'palavrasecreta', {
+      token: jwt.sign({ id }, 'palavrasecretaentidade', {
         expiresIn: '20d',
       }),
     });

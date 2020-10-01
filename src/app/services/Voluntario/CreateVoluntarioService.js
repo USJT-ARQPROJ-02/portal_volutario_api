@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import AppError from '../../../errors/AppError';
+import Entidade from '../../models/Entidade';
 import Voluntario from '../../models/Voluntario';
 import VoluntarioRepository from '../../repositories/VoluntarioRepository';
 
@@ -21,13 +22,24 @@ class CreateVoluntarioService {
         throw new AppError(`${err.errors}`, 401);
       });
 
-    const checkUserExists = await VoluntarioRepository.findByEmail(email);
+    const checkEmail = await Voluntario.findOne({
+      where: { email: data.email },
+    });
+    const checkEmail2 = await Entidade.findOne({
+      where: { email: data.email },
+    });
 
-    if (checkUserExists) {
-      throw new AppError('Email address already used', 401);
+    if (checkEmail || checkEmail2) {
+      throw new AppError('Email já cadastrado na aplicação', 401);
     }
 
-    console.log(senha);
+    const checkCpf = await Voluntario.findOne({
+      where: { cpf_cnpj: data.cpf_cnpj },
+    });
+
+    if (checkCpf) {
+      throw new AppError('CPF/CNPJ já cadastrado na aplicação', 401);
+    }
 
     const voluntario = await VoluntarioRepository.create({
       nome,

@@ -1,5 +1,5 @@
 import CreateEntidadeService from '../services/Entidade/CreateEntidadeService';
-import UpdateEntidadeService from '../services/Entidade/UpdateEntidadeoService';
+import UpdateEntidadeService from '../services/Entidade/UpdateEntidadeService';
 import EntidadeRepository from '../repositories/EntidadeRepository';
 
 class EntidadeController {

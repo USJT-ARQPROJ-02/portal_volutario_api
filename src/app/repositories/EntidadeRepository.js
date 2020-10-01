@@ -12,15 +12,16 @@ class EntidadeRepository {
   }
 
   async create(data) {
-    const { nome, cpf_cnpj, email, telefone, data_nasc } = data;
+    const { nome, cnpj, email, senha, telefone, tipo_voluntariado } = data;
     const createEntidade = await Entidade.create({
       nome,
-      cpf_cnpj,
+      cnpj,
       email,
+      senha,
       telefone,
-      data_nasc,
+      tipo_voluntariado,
     });
-    await createEntidade.save();
+
     return createEntidade;
   }
 
@@ -38,9 +39,9 @@ class EntidadeRepository {
     });
 
     if (deleteEntidade) {
-      return { message: 'Entidade Deletado com sucesso' };
+      return { message: 'Entidade deletada com sucesso' };
     } else {
-      return { message: 'Entidade não encontrado' };
+      return { message: 'Entidade não encontrada' };
     }
   }
 }
