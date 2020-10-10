@@ -1,5 +1,4 @@
-import { DataTypes, Model, Sequelize } from 'sequelize';
-import bcrypt from 'bcryptjs';
+import { Model, Sequelize } from 'sequelize';
 
 class Necessidade extends Model {
   static init(sequelize) {
@@ -14,21 +13,11 @@ class Necessidade extends Model {
       { sequelize }
     );
 
-    this.addHook('beforeSave', async necessidade => {
-      if (necessidade.senha) {
-        necessidade.senha = await bcrypt.hash(necessidade.senha, 8);
-      }
-    });
-
     return this;
   }
 
   static associate(models) {
     this.belongsTo(models.Entidade, { foreignKey: 'entidade_id' });
-  }
-
-  async checkPassword(senha) {
-    return bcrypt.compare(senha, this.senha);
   }
 }
 

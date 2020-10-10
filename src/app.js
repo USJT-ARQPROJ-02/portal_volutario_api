@@ -35,14 +35,16 @@ class App {
         const errors = await new Youch(err, req).toJSON();
 
         if (err instanceof AppError) {
+          console.log(err);
           return res.status(err.statusCode).json(err.message);
 
           // eslint-disable-next-line no-else-return
         } else {
+          console.log(err);
           return res.status(500).json(errors);
         }
       }
-
+      console.log(err);
       return res.status(500).json({ error: 'Internal server error' });
     });
   }

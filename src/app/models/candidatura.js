@@ -1,12 +1,10 @@
 import { Model, Sequelize } from 'sequelize';
-import bcrypt from 'bcryptjs';
 
 class Candidatura extends Model {
   static init(sequelize) {
     super.init(
       {
-        data: Sequelize.STRING,
-        aprovado: Sequelize.BOOLEAN,
+        status: { type: Sequelize.BOOLEAN, allowNull: true },
       },
       { sequelize }
     );
