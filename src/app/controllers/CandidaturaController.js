@@ -1,6 +1,7 @@
 import CreateCanditaduraService from '../services/Candidatura/CreateCandidaturaService';
 import Candidatura from '../models/Candidatura';
 import Necessidade from '../models/Necessidade';
+import Voluntario from '../models/Voluntario';
 import CandidaturaRepository from '../repositories/CandidaturaRepository';
 import AppError from '../../errors/AppError';
 
@@ -69,10 +70,14 @@ class CandidaturaControler {
       include: [
         {
           model: Necessidade,
-          attributes: ['entidade_id'],
+          attributes: ['id', 'nome', 'entidade_id'],
           where: {
             entidade_id: req.entidadeId,
           },
+        },
+        {
+          model: Voluntario,
+          attributes: ['id', 'nome', 'cpf_cnpj', 'email', 'telefone', 'endereco']
         },
       ],
     });
