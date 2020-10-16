@@ -33,7 +33,7 @@ routes.post('/necessidade', authEntidade, NecessidadeController.create);
 routes.put('/necessidade/:id', NecessidadeController.update);
 routes.delete('/necessidade/:id', NecessidadeController.delete);
 
-routes.get('/candidatura', authEntidade, CandidaturaController.get);
+routes.get('/candidatura', authEntidade, CandidaturaController.get2);
 routes.post('/candidatura', authVoluntario, CandidaturaController.create);
 routes.put(
   '/candidatura/:id',

@@ -77,7 +77,48 @@ class CandidaturaControler {
         },
         {
           model: Voluntario,
-          attributes: ['id', 'nome', 'cpf_cnpj', 'email', 'telefone', 'endereco']
+          attributes: [
+            'id',
+            'nome',
+            'cpf_cnpj',
+            'email',
+            'telefone',
+            'endereco',
+          ],
+        },
+      ],
+    });
+
+    return res.json(candidaturas);
+  }
+
+  async get2(req, res) {
+    const { status = null } = req.query;
+
+    const candidaturas = await Necessidade.findAll({
+      where: {
+        entidade_id: req.entidadeId,
+      },
+      include: [
+        {
+          model: Candidatura,
+          attributes: ['id', 'status', 'voluntario_id'],
+          where: {
+            status,
+          },
+          include: [
+            {
+              model: Voluntario,
+              attributes: [
+                'id',
+                'nome',
+                'cpf_cnpj',
+                'email',
+                'telefone',
+                'endereco',
+              ],
+            },
+          ],
         },
       ],
     });

@@ -18,6 +18,7 @@ class Necessidade extends Model {
 
   static associate(models) {
     this.belongsTo(models.Entidade, { foreignKey: 'entidade_id' });
+    this.hasMany(models.Candidatura, { foreignKey: 'necessidade_id' });
   }
 }
 
