@@ -6,8 +6,14 @@ import CandidaturaController from './app/controllers/CandidaturaController';
 import SessionController from './app/controllers/SessionController';
 import authEntidade from './app/middlewares/authEntidade';
 import authVoluntario from './app/middlewares/authVoluntario';
+import ResetToken from './app/models/ResetToken';
+import EnviarEmail from './app/services/ResetPassword/EnviarEmail';
+import ResetSenhaService from './app/services/ResetPassword/ResetSenhaService';
 
 const routes = new Router();
+
+routes.post('/reset', EnviarEmail.execute);
+routes.post('/reset/novasenha', ResetSenhaService.execute);
 
 routes.get('/voluntario', VoluntarioController.get);
 routes.post('/voluntario', VoluntarioController.create);

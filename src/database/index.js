@@ -3,9 +3,10 @@ import Voluntario from '../app/models/Voluntario';
 import Entidade from '../app/models/Entidade';
 import Necessidade from '../app/models/Necessidade';
 import Candidatura from '../app/models/Candidatura';
+import ResetToken from '../app/models/ResetToken';
 import databaseConfig from '../config/database';
 
-const models = [Voluntario, Entidade, Necessidade, Candidatura];
+const models = [Voluntario, Entidade, Necessidade, Candidatura, ResetToken];
 
 class Database {
   constructor() {
