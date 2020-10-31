@@ -54,6 +54,7 @@ routes.get(
   CandidaturaController.getCandidaturasVoluntariosEncerradas
 );
 
+//
 routes.get('/candidatura', authEntidade, CandidaturaController.get);
 routes.post('/candidatura', authVoluntario, CandidaturaController.create);
 routes.put(
@@ -68,6 +69,12 @@ routes.get(
   '/candidatura/voluntario',
   authVoluntario,
   CandidaturaController.getCandidaturasVoluntario
+);
+
+routes.get(
+  '/candidatura/voluntario/:id',
+  authVoluntario,
+  CandidaturaController.getCandidaturasVoluntariosEncerradas2
 );
 
 export default routes;

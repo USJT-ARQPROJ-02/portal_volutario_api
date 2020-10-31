@@ -186,6 +186,37 @@ class CandidaturaControler {
     res.json(candidaturas);
   }
 
+  async getCandidaturasVoluntariosEncerradas2(req, res) {
+    const { id } = req.params;
+    const candidaturas = await Candidatura.findAll({
+      where: {
+        voluntario_id: id,
+        status: true,
+      },
+      include: [
+        {
+          model: Voluntario,
+          attributes: [
+            'id',
+            'nome',
+            'cpf_cnpj',
+            'email',
+            'telefone',
+            'endereco',
+          ],
+        },
+        {
+          model: Necessidade,
+          where: {
+            data_fim: { [Sequelize.Op.lte]: new Date() },
+          },
+        },
+      ],
+    });
+
+    res.json(candidaturas);
+  }
+
   async delete(req, res) {
     const findCandidatura = await Candidatura.findByPk(candidatura_id);
 
