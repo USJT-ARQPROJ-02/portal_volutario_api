@@ -71,9 +71,10 @@ routes.get(
   CandidaturaController.getCandidaturasVoluntario
 );
 
+
+// buscar candidaturas encerradas voluntario
 routes.get(
   '/candidatura/voluntario/:id',
-  authVoluntario,
   CandidaturaController.getCandidaturasVoluntariosEncerradas2
 );
 
