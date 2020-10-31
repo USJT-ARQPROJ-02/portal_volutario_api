@@ -99,7 +99,6 @@ class CandidaturaControler {
     const candidaturas = await Necessidade.findAll({
       where: {
         entidade_id: req.entidadeId,
-        status,
       },
       include: [
         {

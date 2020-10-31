@@ -30,34 +30,31 @@ routes.delete('/entidade/:id', EntidadeController.delete);
 
 routes.get('/necessidade', NecessidadeController.get);
 
+// buscar  necessidades pelas preferencias do usuario
 routes.get(
   '/necessidade/voluntario',
   authVoluntario,
   NecessidadeController.getByPreferences
 );
+
 routes.post('/necessidade', authEntidade, NecessidadeController.create);
 routes.put('/necessidade/:id', NecessidadeController.update);
 routes.delete('/necessidade/:id', NecessidadeController.delete);
 
+// buscar necessidades encerradas Entidade
 routes.get(
   '/necessidade/entidade',
   authEntidade,
   NecessidadeController.getEncerradasEntidade
 );
-
-routes.get('/candidatura', authEntidade, CandidaturaController.get);
-routes.get(
-  '/candidatura/voluntario',
-  authVoluntario,
-  CandidaturaController.getCandidaturasVoluntario
-);
-
+// voluntario
 routes.get(
   '/candidatura/voluntario/encerradas',
   authVoluntario,
   CandidaturaController.getCandidaturasVoluntariosEncerradas
 );
 
+routes.get('/candidatura', authEntidade, CandidaturaController.get);
 routes.post('/candidatura', authVoluntario, CandidaturaController.create);
 routes.put(
   '/candidatura/:id',
@@ -65,5 +62,12 @@ routes.put(
   CandidaturaController.updateStatus
 );
 routes.delete('/candidatura/:id', CandidaturaController.delete);
+
+// buscar candidaturas voluntario
+routes.get(
+  '/candidatura/voluntario',
+  authVoluntario,
+  CandidaturaController.getCandidaturasVoluntario
+);
 
 export default routes;
