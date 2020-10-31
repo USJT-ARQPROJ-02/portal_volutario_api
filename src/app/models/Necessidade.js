@@ -9,6 +9,11 @@ class Necessidade extends Model {
         descricao: Sequelize.STRING,
         status: Sequelize.BOOLEAN,
         endereco: Sequelize.STRING,
+        cep: Sequelize.STRING,
+        longitude: Sequelize.STRING,
+        latitude: Sequelize.STRING,
+        data_inicio: Sequelize.DATE,
+        data_fim: Sequelize.DATE,
       },
       { sequelize }
     );

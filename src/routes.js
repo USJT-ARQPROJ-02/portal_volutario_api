@@ -29,11 +29,35 @@ routes.put('/entidade/:id', EntidadeController.update);
 routes.delete('/entidade/:id', EntidadeController.delete);
 
 routes.get('/necessidade', NecessidadeController.get);
+
+routes.get(
+  '/necessidade/voluntario',
+  authVoluntario,
+  NecessidadeController.getByPreferences
+);
 routes.post('/necessidade', authEntidade, NecessidadeController.create);
 routes.put('/necessidade/:id', NecessidadeController.update);
 routes.delete('/necessidade/:id', NecessidadeController.delete);
 
-routes.get('/candidatura', authEntidade, CandidaturaController.get2);
+routes.get(
+  '/necessidade/entidade',
+  authEntidade,
+  NecessidadeController.getEncerradasEntidade
+);
+
+routes.get('/candidatura', authEntidade, CandidaturaController.get);
+routes.get(
+  '/candidatura/voluntario',
+  authVoluntario,
+  CandidaturaController.getCandidaturasVoluntario
+);
+
+routes.get(
+  '/candidatura/voluntario/encerradas',
+  authVoluntario,
+  CandidaturaController.getCandidaturasVoluntariosEncerradas
+);
+
 routes.post('/candidatura', authVoluntario, CandidaturaController.create);
 routes.put(
   '/candidatura/:id',

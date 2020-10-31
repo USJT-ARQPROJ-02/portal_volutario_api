@@ -5,23 +5,18 @@ import Voluntario from '../../models/Voluntario';
 import VoluntarioRepository from '../../repositories/VoluntarioRepository';
 
 class CreateVoluntarioService {
-  async execute({ nome, cpf_cnpj, email, telefone, endereco, senha }) {
-    const schema = Yup.object().shape({
-      nome: Yup.string().required(),
-      cpf_cnpj: Yup.string().required(),
-      email: Yup.string().required(),
-      telefone: Yup.string().required(),
-      endereco: Yup.string().required(),
-      senha: Yup.string().required(),
-    });
-
-    await schema
-      .validate({ nome, cpf_cnpj, email, telefone, endereco, senha })
-      .catch(function(err) {
-        console.log(err);
-        throw new AppError(`${err.errors}`, 401);
-      });
-
+  async execute({
+    nome,
+    cpf_cnpj,
+    email,
+    telefone,
+    endereco,
+    cep,
+    longitude,
+    latitude,
+    tipo_voluntariado,
+    senha,
+  }) {
     const checkEmail = await Voluntario.findOne({
       where: { email: email },
     });
@@ -47,6 +42,10 @@ class CreateVoluntarioService {
       email,
       telefone,
       endereco,
+      cep,
+      longitude,
+      latitude,
+      tipo_voluntariado,
       senha,
     });
 

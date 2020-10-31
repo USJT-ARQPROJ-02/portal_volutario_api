@@ -1,4 +1,4 @@
-import { Model, Sequelize } from 'sequelize';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
 class Voluntario extends Model {
@@ -10,6 +10,10 @@ class Voluntario extends Model {
         email: Sequelize.STRING,
         telefone: Sequelize.STRING,
         endereco: Sequelize.STRING,
+        cep: Sequelize.STRING,
+        longitude: Sequelize.STRING,
+        latitude: Sequelize.STRING,
+        tipo_voluntariado: Sequelize.ARRAY(DataTypes.STRING),
         senha: Sequelize.STRING,
       },
       { sequelize }

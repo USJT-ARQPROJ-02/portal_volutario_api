@@ -1,3 +1,4 @@
+import Sequelize from 'sequelize';
 import CreateCanditaduraService from '../services/Candidatura/CreateCandidaturaService';
 import Candidatura from '../models/Candidatura';
 import Necessidade from '../models/Necessidade';
@@ -60,44 +61,45 @@ class CandidaturaControler {
     }
   }
 
+  // async get(req, res) {
+  //   const { status = null } = req.query;
+
+  //   const candidaturas = await Candidatura.findAll({
+  //     where: {
+  //       status,
+  //     },
+  //     include: [
+  //       {
+  //         model: Necessidade,
+  //         attributes: ['id', 'nome', 'entidade_id'],
+  //         where: {
+  //           entidade_id: req.entidadeId,
+  //         },
+  //       },
+  //       {
+  //         model: Voluntario,
+  //         attributes: [
+  //           'id',
+  //           'nome',
+  //           'cpf_cnpj',
+  //           'email',
+  //           'telefone',
+  //           'endereco',
+  //         ],
+  //       },
+  //     ],
+  //   });
+
+  //   return res.json(candidaturas);
+  // }
+
   async get(req, res) {
-    const { status = null } = req.query;
-
-    const candidaturas = await Candidatura.findAll({
-      where: {
-        status,
-      },
-      include: [
-        {
-          model: Necessidade,
-          attributes: ['id', 'nome', 'entidade_id'],
-          where: {
-            entidade_id: req.entidadeId,
-          },
-        },
-        {
-          model: Voluntario,
-          attributes: [
-            'id',
-            'nome',
-            'cpf_cnpj',
-            'email',
-            'telefone',
-            'endereco',
-          ],
-        },
-      ],
-    });
-
-    return res.json(candidaturas);
-  }
-
-  async get2(req, res) {
     const { status = null } = req.query;
 
     const candidaturas = await Necessidade.findAll({
       where: {
         entidade_id: req.entidadeId,
+        status,
       },
       include: [
         {
@@ -124,6 +126,65 @@ class CandidaturaControler {
     });
 
     return res.json(candidaturas);
+  }
+
+  async getCandidaturasVoluntario(req, res) {
+    const { status = null } = req.query;
+
+    const candidaturas = await Candidatura.findAll({
+      where: {
+        voluntario_id: req.voluntarioId,
+        status,
+      },
+      include: [
+        {
+          model: Voluntario,
+          attributes: [
+            'id',
+            'nome',
+            'cpf_cnpj',
+            'email',
+            'telefone',
+            'endereco',
+          ],
+        },
+        {
+          model: Necessidade,
+        },
+      ],
+    });
+
+    res.json(candidaturas);
+  }
+
+  async getCandidaturasVoluntariosEncerradas(req, res) {
+    const candidaturas = await Candidatura.findAll({
+      where: {
+        voluntario_id: req.voluntarioId,
+        status: true,
+      },
+      include: [
+        {
+          model: Voluntario,
+          attributes: [
+            'id',
+            'nome',
+            'cpf_cnpj',
+            'email',
+            'telefone',
+            'endereco',
+          ],
+        },
+        {
+          model: Necessidade,
+          where: {
+            data_fim: { [Sequelize.Op.lte]: new Date() },
+          },
+        },
+      ],
+    });
+
+    res.json(candidaturas);
   }
 
   async delete(req, res) {

@@ -12,13 +12,28 @@ class VoluntarioRepository {
   }
 
   async create(data) {
-    const { nome, cpf_cnpj, email, telefone, endereco, senha } = data;
+    const {
+      nome,
+      cpf_cnpj,
+      email,
+      telefone,
+      endereco,
+      cep,
+      longitude,
+      latitude,
+      senha,
+      tipo_voluntariado,
+    } = data;
     const createVoluntario = await Voluntario.create({
       nome,
       cpf_cnpj,
       email,
       telefone,
       endereco,
+      cep,
+      longitude,
+      latitude,
+      tipo_voluntariado,
       senha,
     });
 

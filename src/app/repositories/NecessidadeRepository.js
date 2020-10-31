@@ -7,7 +7,18 @@ class NecessidadeRepository {
   }
 
   async create(data) {
-    const { nome, tipo_voluntariado, descricao, endereco, entidade_id } = data;
+    const {
+      nome,
+      tipo_voluntariado,
+      descricao,
+      endereco,
+      entidade_id,
+      cep,
+      longitude,
+      latitude,
+      data_inicio,
+      data_fim,
+    } = data;
 
     const createNecessidade = await Necessidade.create({
       nome,
@@ -16,6 +27,11 @@ class NecessidadeRepository {
       endereco,
       status: true,
       entidade_id,
+      cep,
+      longitude,
+      latitude,
+      data_inicio,
+      data_fim,
     });
 
     return createNecessidade;
