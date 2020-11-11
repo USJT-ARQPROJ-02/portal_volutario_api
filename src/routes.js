@@ -20,6 +20,8 @@ routes.post('/voluntario', VoluntarioController.create);
 routes.put('/voluntario/:id', VoluntarioController.update);
 routes.delete('/voluntario/:id', VoluntarioController.delete);
 
+routes.get('/perfil', authVoluntario, VoluntarioController.getMyself);
+
 routes.post('/voluntario/login', SessionController.loginVoluntario);
 routes.post('/entidade/login', SessionController.loginEntidade);
 
@@ -70,7 +72,6 @@ routes.get(
   authVoluntario,
   CandidaturaController.getCandidaturasVoluntario
 );
-
 
 // buscar candidaturas encerradas voluntario
 routes.get(

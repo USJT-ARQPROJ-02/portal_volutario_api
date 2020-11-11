@@ -1,6 +1,7 @@
 import CreateVoluntarioService from '../services/Voluntario/CreateVoluntarioService';
 import UpdateVoluntarioService from '../services/Voluntario/UpdateVoluntarioService';
 import VoluntarioRepository from '../repositories/VoluntarioRepository';
+import Voluntario from '../models/Voluntario';
 
 class VoluntarioController {
   async create(req, res) {
@@ -19,13 +20,54 @@ class VoluntarioController {
   }
 
   async get(req, res) {
-    const voluntarios = await VoluntarioRepository.getAll();
+    const { id } = req.query;
 
-    return res.json(voluntarios);
+    if (id) {
+      const voluntario = await Voluntario.findByPk(id, {
+        attributes: [
+          'id',
+          'nome',
+          'cpf_cnpj',
+          'email',
+          'telefone',
+          'endereco',
+          'longitude',
+          'latitude',
+          'tipo_voluntariado',
+          'createdAt',
+        ],
+      });
+
+      return res.json(voluntario);
+    } else {
+      const voluntarios = await VoluntarioRepository.getAll();
+      return res.json(voluntarios);
+    }
   }
 
   async delete(req, res) {
     const voluntario = await VoluntarioRepository.delete(req.params.id);
+
+    return res.json(voluntario);
+  }
+
+  async getMyself(req, res) {
+    const id = req.voluntarioId;
+
+    const voluntario = await Voluntario.findByPk(id, {
+      attributes: [
+        'id',
+        'nome',
+        'cpf_cnpj',
+        'email',
+        'telefone',
+        'endereco',
+        'longitude',
+        'latitude',
+        'tipo_voluntariado',
+        'createdAt',
+      ],
+    });
 
     return res.json(voluntario);
   }
