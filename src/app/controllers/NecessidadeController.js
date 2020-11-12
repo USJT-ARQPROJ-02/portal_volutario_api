@@ -5,7 +5,7 @@ import NecessidadeRepository from '../repositories/NecessidadeRepository';
 import Voluntario from '../models/Voluntario';
 import AppError from '../../errors/AppError';
 import Necessidade from '../models/Necessidade';
-import { getYear } from 'date-fns';
+import { getYear, parseISO } from 'date-fns';
 
 class NecessidadeController {
   async create(req, res) {
@@ -46,13 +46,13 @@ class NecessidadeController {
   }
 
   async getEncerradasDashboard(req, res) {
+    const date = new Date().toLocaleString();
+    console.log(date);
     const necessidades = await Necessidade.sequelize.query(
-      `SELECT date_trunc('month', necessidades.data_fim) "month", count(*)  FROM public.necessidades group by 1 ORDER BY 1`
+      `SELECT date_trunc('month', necessidades.data_fim) "month", count(*) FROM public.necessidades where data_fim < '${date}' group by 1 ORDER BY 1`
     );
 
     const todayYear = getYear(new Date());
-
-    console.log(todayYear);
 
     const data = [];
     let _2019 = 0;
