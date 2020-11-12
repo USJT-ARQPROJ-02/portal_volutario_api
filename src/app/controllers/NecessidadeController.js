@@ -5,8 +5,7 @@ import NecessidadeRepository from '../repositories/NecessidadeRepository';
 import Voluntario from '../models/Voluntario';
 import AppError from '../../errors/AppError';
 import Necessidade from '../models/Necessidade';
-import { or } from 'sequelize';
-import { he } from 'date-fns/locale';
+import { getYear } from 'date-fns';
 
 class NecessidadeController {
   async create(req, res) {
@@ -46,10 +45,40 @@ class NecessidadeController {
     res.json(findNecessidade);
   }
 
+  async getEncerradasDashboard(req, res) {
+    const necessidades = await Necessidade.sequelize.query(
+      `SELECT date_trunc('month', necessidades.data_fim) "month", count(*)  FROM public.necessidades group by 1 ORDER BY 1`
+    );
+
+    const todayYear = getYear(new Date());
+
+    console.log(todayYear);
+
+    const data = [];
+    let _2019 = 0;
+    let _2018 = 0;
+
+    for (const necessidade of necessidades[0]) {
+      const necessidadeYear = getYear(necessidade.month);
+      if (necessidadeYear === todayYear) {
+        data.push(necessidade);
+      } else {
+        if (necessidadeYear === 2019) {
+          _2019++;
+        } else if (necessidadeYear === 2018) {
+          _2018++;
+        }
+      }
+    }
+
+    data.push({ year: 2019, count: _2019 });
+    data.push({ year: 2018, count: _2018 });
+
+    return res.json(data);
+  }
+
   async getByPreferences(req, res) {
     const voluntario_id = req.voluntarioId;
-
-    console.log(voluntario_id);
 
     const findVoluntario = await Voluntario.findByPk(voluntario_id);
 

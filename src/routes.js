@@ -32,6 +32,11 @@ routes.delete('/entidade/:id', EntidadeController.delete);
 
 routes.get('/necessidade', NecessidadeController.get);
 
+routes.get(
+  '/necessidade/dashboard',
+  NecessidadeController.getEncerradasDashboard
+);
+
 // buscar  necessidades pelas preferencias do usuario
 routes.get(
   '/necessidade/voluntario',
