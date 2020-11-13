@@ -15,6 +15,10 @@ import ResetSenhaService from './app/services/ResetPassword/ResetSenhaService';
 const upload = multer(multerConfig);
 const routes = new Router();
 
+routes.post('/doar', upload.single('file'), (req, res) => {
+  return res.json('Upload realizado com sucesso');
+});
+
 routes.post('/reset', EnviarEmail.execute);
 routes.post('/reset/novasenha', ResetSenhaService.execute);
 
@@ -86,7 +90,5 @@ routes.get(
   '/candidatura/voluntario/:id',
   CandidaturaController.getCandidaturasVoluntariosEncerradas2
 );
-
-routes.post('/doar', upload.single('file'));
 
 export default routes;
