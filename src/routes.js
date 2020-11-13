@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from './config/multer';
 import VoluntarioController from './app/controllers/VoluntarioController';
 import EntidadeController from './app/controllers/EntidadeController';
 import NecessidadeController from './app/controllers/NecessidadeController';
@@ -10,6 +12,7 @@ import ResetToken from './app/models/ResetToken';
 import EnviarEmail from './app/services/ResetPassword/EnviarEmail';
 import ResetSenhaService from './app/services/ResetPassword/ResetSenhaService';
 
+const upload = multer(multerConfig);
 const routes = new Router();
 
 routes.post('/reset', EnviarEmail.execute);
@@ -83,5 +86,7 @@ routes.get(
   '/candidatura/voluntario/:id',
   CandidaturaController.getCandidaturasVoluntariosEncerradas2
 );
+
+routes.post('/doar', upload.single('file'));
 
 export default routes;
