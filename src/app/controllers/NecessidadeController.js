@@ -20,18 +20,51 @@ class NecessidadeController {
   }
 
   async update(req, res) {
-    const necessidadeService = new UpdateNecessidadeService();
+    const { id } = req.params;
 
-    const data = { id: req.params.id, updateData: req.body };
-    const updateNecessidade = await necessidadeService.execute(data);
+    const files = req.files;
 
-    return res.json(updateNecessidade);
+    const findNecessidade = await Necessidade.findByPk(id);
+
+    if (!findNecessidade) {
+      throw new AppError('Necessidade não encontrada');
+    }
+
+    let helperFiles;
+
+    if (!findNecessidade.images) {
+      helperFiles = [];
+    } else {
+      helperFiles = findNecessidade.images;
+    }
+
+    for (let file of files) {
+      helperFiles.push(file.filename);
+    }
+
+    findNecessidade.images = helperFiles;
+    findNecessidade.feedback = req.body.feedback;
+    findNecessidade.status = false;
+
+    await findNecessidade.save();
+
+    return res.json(findNecessidade);
   }
 
   async get(req, res) {
     const necessidade = await NecessidadeRepository.getAll();
 
     return res.json(necessidade);
+  }
+
+  async getEncerradas(req, res) {
+    const findNecessidade = await Necessidade.findAll({
+      where: {
+        status: false,
+      },
+    });
+
+    res.json(findNecessidade);
   }
 
   async getEncerradasEntidade(req, res) {
@@ -101,6 +134,17 @@ class NecessidadeController {
     });
 
     res.json(findNecessidade);
+  }
+
+  async getMyEntidade(req, res) {
+    const { id = req.entidadeId } = req.params;
+    const response = await Necessidade.findAll({
+      where: {
+        entidade_id: id,
+      },
+    });
+
+    return res.json(response);
   }
 
   async delete(req, res) {

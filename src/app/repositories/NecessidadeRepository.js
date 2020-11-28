@@ -1,4 +1,5 @@
 import Necessidade from '../models/Necessidade';
+import Sequelize from 'sequelize';
 
 class NecessidadeRepository {
   async findById(id) {
@@ -38,7 +39,10 @@ class NecessidadeRepository {
   }
 
   async getAll() {
-    const findNecessidade = await Necessidade.findAll();
+    const findNecessidade = await Necessidade.findAll({
+      where: { data_inicio: { [Sequelize.Op.gte]: new Date() } },
+      order: [['data_inicio']],
+    });
 
     return findNecessidade;
   }

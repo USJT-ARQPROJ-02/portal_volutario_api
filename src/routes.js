@@ -1,23 +1,34 @@
 import { Router } from 'express';
 import multer from 'multer';
-import multerConfig from './config/multer';
+
 import VoluntarioController from './app/controllers/VoluntarioController';
 import EntidadeController from './app/controllers/EntidadeController';
 import NecessidadeController from './app/controllers/NecessidadeController';
 import CandidaturaController from './app/controllers/CandidaturaController';
 import SessionController from './app/controllers/SessionController';
 import authEntidade from './app/middlewares/authEntidade';
+import { donateMulterConfig, necessidadeMulterConfig } from './config/multer';
 import authVoluntario from './app/middlewares/authVoluntario';
 import ResetToken from './app/models/ResetToken';
 import EnviarEmail from './app/services/ResetPassword/EnviarEmail';
 import ResetSenhaService from './app/services/ResetPassword/ResetSenhaService';
+import Necessidade from './app/models/Necessidade';
 
-const upload = multer(multerConfig);
+const upload = multer(donateMulterConfig);
+
+const uploadNecessidade = multer(necessidadeMulterConfig);
+
 const routes = new Router();
 
 routes.post('/doar', upload.single('file'), (req, res) => {
   return res.json('Upload realizado com sucesso');
 });
+
+routes.put(
+  '/necessidade/:id',
+  uploadNecessidade.array('files', 10),
+  NecessidadeController.update
+);
 
 routes.post('/reset', EnviarEmail.execute);
 routes.post('/reset/novasenha', ResetSenhaService.execute);
@@ -32,12 +43,16 @@ routes.get('/perfil', authVoluntario, VoluntarioController.getMyself);
 routes.post('/voluntario/login', SessionController.loginVoluntario);
 routes.post('/entidade/login', SessionController.loginEntidade);
 
-routes.get('/entidade', authEntidade, EntidadeController.get);
+routes.get('/entidade', EntidadeController.get);
 routes.post('/entidade', EntidadeController.create);
 routes.put('/entidade/:id', EntidadeController.update);
 routes.delete('/entidade/:id', EntidadeController.delete);
 
+routes.get('/entidade/necessidades/:id', authEntidade, NecessidadeController.getMyEntidade);
+
 routes.get('/necessidade', NecessidadeController.get);
+
+routes.get('/necessidade/encerradas', NecessidadeController.getEncerradas);
 
 routes.get(
   '/necessidade/dashboard',

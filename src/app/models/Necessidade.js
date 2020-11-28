@@ -1,4 +1,4 @@
-import { Model, Sequelize } from 'sequelize';
+import Sequelize, { DataTypes, Model } from 'sequelize';
 
 class Necessidade extends Model {
   static init(sequelize) {
@@ -14,6 +14,11 @@ class Necessidade extends Model {
         latitude: Sequelize.STRING,
         data_inicio: Sequelize.DATE,
         data_fim: Sequelize.DATE,
+        feedback: { type: Sequelize.STRING, allowNull: true },
+        images: {
+          allowNull: true,
+          type: Sequelize.ARRAY(DataTypes.STRING),
+        },
       },
       { sequelize }
     );
